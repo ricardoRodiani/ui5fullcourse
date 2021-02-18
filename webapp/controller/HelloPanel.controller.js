@@ -30,6 +30,7 @@ sap.ui.define(
                         Fragment.load({
                             id: oView.getId(),
                             name: "sap.ui.demo.walkthrough.view.HelloDialog",
+                            controller: this,
                         }).then(function (oDialog) {
                             // connect dialog to the root view os this component (models, lifecyle)
                             oView.addDependent(oDialog);
@@ -38,6 +39,11 @@ sap.ui.define(
                     } else {
                         this.byId("helloDialog").open();
                     }
+                },
+                onCloseDialog: function () {
+                    // note: We don't need to chain to the oDialog promise, since this event handler
+                    // is only called from within the loaded dialog itself
+                    this.byId("helloDialog").close();
                 },
             }
         );
