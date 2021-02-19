@@ -1,0 +1,4 @@
+{
+    "ui5-tools.server.odataProxy": "Gateway",
+    "ui5-tools.server.odataUri": "https://services.odata.org/V2/Northwind/Northwind.svc/"
+}
