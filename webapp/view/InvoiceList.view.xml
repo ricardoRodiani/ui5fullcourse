@@ -4,6 +4,7 @@
     xmlns="sap.m" >
     <List 
         id="invoiceList"
+        headerText="{i18n>invoiceListTitle}"
         class="sapUiResponsiveMargin"
         width="auto"
         items="{
@@ -31,7 +32,9 @@
                     }
                 }"
                 numberUnit="{view>/currency}"
-                numberState="{= ${invoice>ExtendedPrice} > 50 ? 'Error' : 'Success'}" >
+                numberState="{= ${invoice>ExtendedPrice} > 50 ? 'Error' : 'Success'}"
+                type="Navigation"
+                press="onPress" >
                 <firstStatus>
                     <ObjectStatus text="{
                         path: 'invoice>Status',
