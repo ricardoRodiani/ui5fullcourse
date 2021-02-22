@@ -1,6 +1,11 @@
 sap.ui.define(
-    ["sap/ui/core/mvc/Controller", "sap/ui/core/UIComponent", "sap/ui/core/routing/History"],
-    function (Controller, UIComponent, History) {
+    [
+        "sap/ui/core/mvc/Controller",
+        "sap/ui/core/UIComponent",
+        "sap/ui/core/routing/History",
+        "sap/m/MessageToast",
+    ],
+    function (Controller, UIComponent, History, MessageToast) {
         "use strict";
         return Controller.extend("sap.ui.demo.walkthrough.controller.Detail", {
             onInit: function () {
@@ -10,6 +15,7 @@ sap.ui.define(
                     .attachPatternMatched(this._onObjectMatched, this);
             },
             _onObjectMatched: function (oEvent) {
+                this.byId("rating").reset();
                 this.getView().bindElement({
                     path:
                         "/" +
@@ -20,16 +26,26 @@ sap.ui.define(
                 });
             },
             onNavBack: function () {
-                var oHistory = History.getInstance()
-                var sPreviousHash = oHistory.getPreviousHash()
+                var oHistory = History.getInstance();
+                var sPreviousHash = oHistory.getPreviousHash();
 
                 if (sPreviousHash !== undefined) {
-                    window.history.go(-1)
+                    window.history.go(-1);
                 } else {
-                    var oRouter = UIComponent.getRouterFor(this)
-                    oRouter.navTo("overview", {}, true)
+                    var oRouter = UIComponent.getRouterFor(this);
+                    oRouter.navTo("overview", {}, true);
                 }
-            }
+            },
+            onRatingChange: function (oEvent) {
+                var fValue = oEvent.getParameter("value");
+                var oResourceBundle = this.getView()
+                    .getModel("i18n")
+                    .getResourceBundle();
+
+                MessageToast.show(
+                    oResourceBundle.getText("ratingConfirmation", [fValue])
+                );
+            },
         });
     }
 );
